@@ -28,28 +28,28 @@ public class Statement {
                             playFor(perf).getName(), usd(amountFor(perf)), perf.getAudience());
         }
 
-        result += String.format("총액: %s\n", usd(appleSauce()));
+        result += String.format("총액: %s\n", usd(totalAmount()));
         result += String.format("적립 포인트: %s점\n", totalVolumeCredits());
         return result;
 
     }
 
-    private int appleSauce() throws Exception {
-        int totalAmount = 0;
+    private int totalAmount() throws Exception {
+        int result = 0;
         for (Performance perf : invoice.getPerformances()) {
-            totalAmount += amountFor(perf);
+            result += amountFor(perf);
         }
-        return totalAmount;
+        return result;
     }
 
     private int totalVolumeCredits() {
-        int volumeCredits = 0;
+        int result = 0;
         //refactor: volumeCredits 누적 부분 분리
         for (Performance perf : invoice.getPerformances()) {
             // 포인트 적립
-            volumeCredits += volumeCreditsFor(perf);
+            result += volumeCreditsFor(perf);
         }
-        return volumeCredits;
+        return result;
     }
 
     //refactor: format 임시변수 함수 추출, 메서드 이름 변경
