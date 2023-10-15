@@ -63,26 +63,28 @@ public class Chapter01Application {
 
     //refactor: switch 함수 추출
     private static int amountFor(Performance perf, Play play) throws Exception {
-        int thisAmount = 0;
+        //refactor: 명시적인 이름 사용하기
+        //totalAmout => result
+        int result = 0;
 
         switch (play.getType()) {
             case "tragedy":
-                thisAmount = 40000;
+                result = 40000;
                 if (perf.getAudience() > 30) {
-                    thisAmount += 1000 * (perf.getAudience() - 30);
+                    result += 1000 * (perf.getAudience() - 30);
                 }
                 break;
             case "comedy":
-                thisAmount = 30000;
+                result = 30000;
                 if (perf.getAudience() > 20) {
-                    thisAmount += 10000 + 500 * (perf.getAudience() - 20);
+                    result += 10000 + 500 * (perf.getAudience() - 20);
                 }
-                thisAmount += 300 * perf.getAudience();
+                result += 300 * perf.getAudience();
                 break;
             default:
                 throw new Exception(String.format("알 수 없는 장르: %s", play.getType()));
         }
-        return thisAmount;
+        return result;
     }
 
     public static void main(String[] args) throws Exception {
