@@ -27,12 +27,12 @@ public class Statement {
         format.setMinimumFractionDigits(2);
 
         for (Performance perf : invoice.getPerformances()) {
-            int thisAmount = amountFor(perf, playFor(plays, perf));
+            int thisAmount = amountFor(perf);
             // 포인트 적립
             volumeCredits += Math.max(perf.getAudience() - 30, 0);
 
             // 희극 관객 5명마다 추가 포인트 제공
-            if (playFor(plays, perf).getType().equals("comedy")) {
+            if (playFor(perf).getType().equals("comedy")) {
                 volumeCredits += Math.floor(perf.getAudience() / 5);
             }
 
@@ -40,7 +40,7 @@ public class Statement {
             result +=
                     String.format(
                             "%15s:%12s%4s석\n",
-                            playFor(plays, perf).getName(), format.format(thisAmount / 100), perf.getAudience());
+                            playFor(perf).getName(), format.format(thisAmount / 100), perf.getAudience());
             totalAmount += thisAmount;
         }
 
@@ -50,22 +50,20 @@ public class Statement {
     }
 
     //refactor: play 변수 제거 (질의 함수로 변경)
-    private static Play playFor(Play[] plays, Performance perf) {
-        Play play =
-                Arrays.stream(plays)
-                        .filter(p -> p.getPlayId().equals(perf.getPlayId()))
-                        .findFirst()
-                        .get();
-        return play;
+    private Play playFor(Performance perf) {
+        return Arrays.stream(plays)
+                .filter(p -> p.getPlayId().equals(perf.getPlayId()))
+                .findFirst()
+                .get();
     }
 
     //refactor: switch 함수 추출
-    private static int amountFor(Performance aPerformance, Play play) throws Exception {
+    private int amountFor(Performance aPerformance) throws Exception {
         //refactor: 명시적인 이름 사용하기
         //totalAmout => result
         int result = 0;
 
-        switch (play.getType()) {
+        switch (playFor(aPerformance).getType()) {
             case "tragedy":
                 result = 40000;
                 if (aPerformance.getAudience() > 30) {
@@ -80,7 +78,7 @@ public class Statement {
                 result += 300 * aPerformance.getAudience();
                 break;
             default:
-                throw new Exception(String.format("알 수 없는 장르: %s", play.getType()));
+                throw new Exception(String.format("알 수 없는 장르: %s", playFor(aPerformance).getType()));
         }
         return result;
     }
