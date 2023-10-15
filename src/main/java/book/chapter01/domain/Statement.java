@@ -16,22 +16,25 @@ public class Statement {
     private final Invoice invoice;
     private final Play[] plays;
 
-    //refactor: 명세서 클래스 추출하기
+    //refactor: 명세서 클래스 추출
     public String readPlainText() throws Exception {
         int totalAmount = 0;
         int volumeCredits = 0;
         String result = String.format("청구 내역 (고객명: %s)\n", invoice.getCustomer());
 
         for (Performance perf : invoice.getPerformances()) {
-            // 포인트 적립
-            volumeCredits += volumeCreditsFor(perf);
-
             // 청구 내역 출력
             result +=
                     String.format(
                             "%15s:%12s%4s석\n",
                             playFor(perf).getName(), usd(amountFor(perf)), perf.getAudience());
             totalAmount += amountFor(perf);
+        }
+
+        //refactor: volumeCredits 누적 부분 분리
+        for (Performance perf : invoice.getPerformances()) {
+            // 포인트 적립
+            volumeCredits += volumeCreditsFor(perf);
         }
 
         result += String.format("총액: %s\n", usd(totalAmount));
