@@ -30,16 +30,21 @@ public class Statement {
             totalAmount += amountFor(perf);
         }
 
+        int volumeCredits = totalVolumeCredits();
+
+        result += String.format("총액: %s\n", usd(totalAmount));
+        result += String.format("적립 포인트: %s점\n", volumeCredits);
+        return result;
+    }
+
+    private int totalVolumeCredits() {
         int volumeCredits = 0;
         //refactor: volumeCredits 누적 부분 분리
         for (Performance perf : invoice.getPerformances()) {
             // 포인트 적립
             volumeCredits += volumeCreditsFor(perf);
         }
-
-        result += String.format("총액: %s\n", usd(totalAmount));
-        result += String.format("적립 포인트: %s점\n", volumeCredits);
-        return result;
+        return volumeCredits;
     }
 
     //refactor: format 임시변수 함수 추출, 메서드 이름 변경
