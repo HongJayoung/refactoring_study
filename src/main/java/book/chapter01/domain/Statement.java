@@ -28,7 +28,7 @@ public class Statement {
 
         for (Performance perf : invoice.getPerformances()) {
             // 포인트 적립
-            volumeCredits = volumeCreditsFor(perf);
+            volumeCredits += volumeCreditsFor(perf);
 
             // 청구 내역 출력
             result +=
