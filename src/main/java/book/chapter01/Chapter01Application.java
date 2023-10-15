@@ -33,11 +33,7 @@ public class Chapter01Application {
         format.setMinimumFractionDigits(2);
 
         for (Performance perf : invoice.getPerformances()) {
-            Play play =
-                    Arrays.stream(plays)
-                            .filter(p -> p.getPlayId().equals(perf.getPlayId()))
-                            .findFirst()
-                            .get();
+            Play play = playFor(plays, perf);
 
             int thisAmount = amountFor(perf, play);
             // 포인트 적립
@@ -59,6 +55,16 @@ public class Chapter01Application {
         result += String.format("총액: %s\n", format.format(totalAmount / 100));
         result += String.format("적립 포인트: %s점\n", volumeCredits);
         return result;
+    }
+
+    //refactor: play 변수 제거 (질의 함수로 변경)
+    private static Play playFor(Play[] plays, Performance perf) {
+        Play play =
+                Arrays.stream(plays)
+                        .filter(p -> p.getPlayId().equals(perf.getPlayId()))
+                        .findFirst()
+                        .get();
+        return play;
     }
 
     //refactor: switch 함수 추출
