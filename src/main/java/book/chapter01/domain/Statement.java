@@ -1,6 +1,7 @@
 package book.chapter01.domain;
 
 import book.chapter01.dto.Invoice;
+import book.chapter01.dto.Performance;
 import book.chapter01.dto.Play;
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +26,7 @@ public class Statement {
         format.setCurrency(Currency.getInstance("USD"));
         format.setMinimumFractionDigits(2);
 
-        for (Invoice.Performance perf : invoice.getPerformances()) {
+        for (Performance perf : invoice.getPerformances()) {
             int thisAmount = amountFor(perf, playFor(plays, perf));
             // 포인트 적립
             volumeCredits += Math.max(perf.getAudience() - 30, 0);
@@ -49,7 +50,7 @@ public class Statement {
     }
 
     //refactor: play 변수 제거 (질의 함수로 변경)
-    private static Play playFor(Play[] plays, Invoice.Performance perf) {
+    private static Play playFor(Play[] plays, Performance perf) {
         Play play =
                 Arrays.stream(plays)
                         .filter(p -> p.getPlayId().equals(perf.getPlayId()))
@@ -59,7 +60,7 @@ public class Statement {
     }
 
     //refactor: switch 함수 추출
-    private static int amountFor(Invoice.Performance aPerformance, Play play) throws Exception {
+    private static int amountFor(Performance aPerformance, Play play) throws Exception {
         //refactor: 명시적인 이름 사용하기
         //totalAmout => result
         int result = 0;
