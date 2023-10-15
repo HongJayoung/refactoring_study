@@ -30,22 +30,22 @@ public class Statement {
             result +=
                     String.format(
                             "%15s:%12s%4s석\n",
-                            playFor(perf).getName(), format(amountFor(perf) / 100), perf.getAudience());
+                            playFor(perf).getName(), usd(amountFor(perf)), perf.getAudience());
             totalAmount += amountFor(perf);
         }
 
-        result += String.format("총액: %s\n", format(totalAmount / 100));
+        result += String.format("총액: %s\n", usd(totalAmount));
         result += String.format("적립 포인트: %s점\n", volumeCredits);
         return result;
     }
 
-    //refactor: format 임시변수 함수 추출
-    private static String format(long aNumber) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("en-US"));
-        format.setCurrency(Currency.getInstance("USD"));
-        format.setMinimumFractionDigits(2);
+    //refactor: format 임시변수 함수 추출, 메서드 이름 변경
+    private static String usd(long aNumber) {
+        NumberFormat usdFormatter = NumberFormat.getCurrencyInstance(new Locale("en-US"));
+        usdFormatter.setCurrency(Currency.getInstance("USD"));
+        usdFormatter.setMinimumFractionDigits(2);
 
-        return format.format(aNumber);
+        return usdFormatter.format(aNumber / 100);
     }
 
     //refactor: 포인트 적립 계산 메서드 추출
