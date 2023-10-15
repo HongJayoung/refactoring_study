@@ -19,7 +19,6 @@ public class Statement {
     //refactor: 명세서 클래스 추출
     public String readPlainText() throws Exception {
         int totalAmount = 0;
-        int volumeCredits = 0;
         String result = String.format("청구 내역 (고객명: %s)\n", invoice.getCustomer());
 
         for (Performance perf : invoice.getPerformances()) {
@@ -31,6 +30,7 @@ public class Statement {
             totalAmount += amountFor(perf);
         }
 
+        int volumeCredits = 0;
         //refactor: volumeCredits 누적 부분 분리
         for (Performance perf : invoice.getPerformances()) {
             // 포인트 적립
