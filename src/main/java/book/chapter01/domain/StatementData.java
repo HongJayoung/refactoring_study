@@ -32,7 +32,7 @@ public class StatementData {
         return result;
     }
 
-    public int totalVolumeCredits() {
+    public int totalVolumeCredits() throws Exception {
         int result = 0;
         //refactor: volumeCredits 누적 부분 분리
         for (Performance perf : invoice.getPerformances()) {
@@ -43,8 +43,9 @@ public class StatementData {
     }
 
     //refactor: 포인트 적립 계산 메서드 추출
-    private int volumeCreditsFor(Performance performance) {
-        return new PerformanceCalculator(performance, playFor(performance)).getVolumeCredits();
+    private int volumeCreditsFor(Performance performance) throws Exception {
+        PerformanceCalculatorFactory performanceCalculatorFactory = new PerformanceCalculatorFactory();
+        return performanceCalculatorFactory.createPerformanceCalculator(performance, playFor(performance)).getVolumeCredits();
     }
 
     //refactor: play 변수 제거 (질의 함수로 변경)
@@ -57,6 +58,7 @@ public class StatementData {
 
     //refactor: switch 함수 추출
     public int amountFor(Performance performance) throws Exception {
-        return new PerformanceCalculator(performance, playFor(performance)).getAmount();
+        PerformanceCalculatorFactory performanceCalculatorFactory = new PerformanceCalculatorFactory();
+        return performanceCalculatorFactory.createPerformanceCalculator(performance, playFor(performance)).getAmount();
     }
 }
