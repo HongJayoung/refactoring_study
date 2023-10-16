@@ -63,28 +63,7 @@ public class StatementData {
     }
 
     //refactor: switch 함수 추출
-    public int amountFor(Performance aPerformance) throws Exception {
-        //refactor: 명시적인 이름 사용하기
-        //totalAmout => result
-        int result = 0;
-
-        switch (playFor(aPerformance).getType()) {
-            case "tragedy":
-                result = 40000;
-                if (aPerformance.getAudience() > 30) {
-                    result += 1000 * (aPerformance.getAudience() - 30);
-                }
-                break;
-            case "comedy":
-                result = 30000;
-                if (aPerformance.getAudience() > 20) {
-                    result += 10000 + 500 * (aPerformance.getAudience() - 20);
-                }
-                result += 300 * aPerformance.getAudience();
-                break;
-            default:
-                throw new Exception(String.format("알 수 없는 장르: %s", playFor(aPerformance).getType()));
-        }
-        return result;
+    public int amountFor(Performance performance) throws Exception {
+        return new PerformanceCalCulator(performance, playFor(performance)).getAmount();
     }
 }
