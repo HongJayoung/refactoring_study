@@ -61,4 +61,8 @@ public class StatementData {
         PerformanceCalculatorFactory performanceCalculatorFactory = new PerformanceCalculatorFactory();
         return performanceCalculatorFactory.createPerformanceCalculator(performance, playFor(performance)).getAmount();
     }
+
+    //PerformanceCalculatorFactory: 타입에 맞는 계산기 구현체를 반환
+    //PerformanceCalculator: 추상클래스로, 각 계산기 구현체의 상위 클래스로 사용이 됨(추상화 목적)
+    //각각의 XXXCalculator: 타입에 맞는 계산기 클래스, 각 타입에 해당하는 총액 계산 및 포인트 계산을 수행
 }
