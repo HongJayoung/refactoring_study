@@ -20,7 +20,7 @@ public class ComedyCalculator extends PerformanceCalculator{
 
     public int getVolumeCredits() {
         int result = 0;
-        result += Math.max(performance.getAudience() - 30, 0);
+        result += super.getVolumeCredits();
         // 희극 관객 5명마다 추가 포인트 제공
         result += Math.floor(performance.getAudience() / 5);
 
