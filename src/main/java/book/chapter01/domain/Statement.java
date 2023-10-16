@@ -16,8 +16,10 @@ public class Statement {
         this.statementData = statementData;
     }
 
-
+    //refactor: HTML 버전 명세서 출력 로직 구현
     public String renderHtml() throws Exception {
+        //SSR -> 타임리프, 머스테치 JSP
+        //CSR -> RVA -> NestJS, Nuxt JS
         String result = String.format("<h1>청구내역 (고객명: %s)\n</h1>", statementData.getCustomer());
         result += "<table>\n";
 
