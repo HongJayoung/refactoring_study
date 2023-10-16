@@ -13,43 +13,28 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class Statement {
 
-    private final Invoice invoice;
-    private final Play[] plays;
+    private StatementData statementData;
+
+    public Statement(StatementData statementData) {
+        this.statementData = statementData;
+    }
 
     //refactor: 명세서 클래스 추출
     public String readPlainText() throws Exception {
-        String result = String.format("청구 내역 (고객명: %s)\n", invoice.getCustomer());
+        String result = String.format("청구 내역 (고객명: %s)\n", statementData.getCustomer());
 
-        for (Performance perf : invoice.getPerformances()) {
+        for (Performance perf : statementData.getPerformances()) {
             // 청구 내역 출력
             result +=
                     String.format(
                             "%15s:%12s%4s석\n",
-                            playFor(perf).getName(), usd(amountFor(perf)), perf.getAudience());
+                            statementData.playFor(perf).getName(), usd(statementData.amountFor(perf)), perf.getAudience());
         }
 
-        result += String.format("총액: %s\n", usd(totalAmount()));
-        result += String.format("적립 포인트: %s점\n", totalVolumeCredits());
+        result += String.format("총액: %s\n", usd(statementData.totalAmount()));
+        result += String.format("적립 포인트: %s점\n", statementData.totalVolumeCredits());
         return result;
 
-    }
-
-    private int totalAmount() throws Exception {
-        int result = 0;
-        for (Performance perf : invoice.getPerformances()) {
-            result += amountFor(perf);
-        }
-        return result;
-    }
-
-    private int totalVolumeCredits() {
-        int result = 0;
-        //refactor: volumeCredits 누적 부분 분리
-        for (Performance perf : invoice.getPerformances()) {
-            // 포인트 적립
-            result += volumeCreditsFor(perf);
-        }
-        return result;
     }
 
     //refactor: format 임시변수 함수 추출, 메서드 이름 변경
@@ -59,51 +44,5 @@ public class Statement {
         usdFormatter.setMinimumFractionDigits(2);
 
         return usdFormatter.format(aNumber / 100);
-    }
-
-    //refactor: 포인트 적립 계산 메서드 추출
-    private int volumeCreditsFor(Performance aPerformance) {
-        int result = 0;
-        result += Math.max(aPerformance.getAudience() - 30, 0);
-
-        // 희극 관객 5명마다 추가 포인트 제공
-        if (playFor(aPerformance).getType().equals("comedy")) {
-            result += Math.floor(aPerformance.getAudience() / 5);
-        }
-        return result;
-    }
-
-    //refactor: play 변수 제거 (질의 함수로 변경)
-    private Play playFor(Performance perf) {
-        return Arrays.stream(plays)
-                .filter(p -> p.getPlayId().equals(perf.getPlayId()))
-                .findFirst()
-                .get();
-    }
-
-    //refactor: switch 함수 추출
-    private int amountFor(Performance aPerformance) throws Exception {
-        //refactor: 명시적인 이름 사용하기
-        //totalAmout => result
-        int result = 0;
-
-        switch (playFor(aPerformance).getType()) {
-            case "tragedy":
-                result = 40000;
-                if (aPerformance.getAudience() > 30) {
-                    result += 1000 * (aPerformance.getAudience() - 30);
-                }
-                break;
-            case "comedy":
-                result = 30000;
-                if (aPerformance.getAudience() > 20) {
-                    result += 10000 + 500 * (aPerformance.getAudience() - 20);
-                }
-                result += 300 * aPerformance.getAudience();
-                break;
-            default:
-                throw new Exception(String.format("알 수 없는 장르: %s", playFor(aPerformance).getType()));
-        }
-        return result;
     }
 }
