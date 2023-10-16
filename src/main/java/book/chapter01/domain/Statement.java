@@ -1,12 +1,9 @@
 package book.chapter01.domain;
 
-import book.chapter01.dto.Invoice;
 import book.chapter01.dto.Performance;
-import book.chapter01.dto.Play;
 import lombok.RequiredArgsConstructor;
 
 import java.text.NumberFormat;
-import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -17,6 +14,27 @@ public class Statement {
 
     public Statement(StatementData statementData) {
         this.statementData = statementData;
+    }
+
+
+    public String renderHtml() throws Exception {
+        String result = String.format("<h1>청구내역 (고객명: %s)\n</h1>", statementData.getCustomer());
+        result += "<table>\n";
+
+        result += "<tr><th>연극</th><th>좌석 수</th><th>금액</th>";
+        for (Performance performance : statementData.getPerformances()) {
+            result +=
+                    String.format(
+                            "<tr><td>%s</td><td>%s</td><td>%d석</td></tr>",
+                            statementData.playFor(performance).getName(),
+                            usd(statementData.amountFor(performance)),
+                            performance.getAudience());
+        }
+        result += "</table><br>";
+
+        result += String.format("총액: %s<br>", usd(statementData.totalAmount()));
+        result += String.format("적립 포인트: %s점<br>", statementData.totalVolumeCredits());
+        return result;
     }
 
     //refactor: 명세서 클래스 추출
