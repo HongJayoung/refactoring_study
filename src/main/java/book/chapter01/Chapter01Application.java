@@ -1,6 +1,7 @@
 package book.chapter01;
 
 import book.chapter01.domain.Statement;
+import book.chapter01.domain.StatementData;
 import book.chapter01.dto.Invoice;
 import book.chapter01.dto.Play;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +25,7 @@ public class Chapter01Application {
         Play[] plays = readJson("resource/plays.json", Play[].class);
         Invoice[] invoices = readJson("resource/invoices.json", Invoice[].class);
 
-        Statement statement = new Statement(invoices[0], plays);
+        Statement statement = new Statement(new StatementData(invoices[0], plays));
         String plainText = statement.readPlainText();
         System.out.println(plainText);
     }
