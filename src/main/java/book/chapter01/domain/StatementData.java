@@ -44,7 +44,7 @@ public class StatementData {
 
     //refactor: 포인트 적립 계산 메서드 추출
     private int volumeCreditsFor(Performance performance) {
-        return new PerformanceCalCulator(performance, playFor(performance)).getVolumeCredits();
+        return new PerformanceCalculator(performance, playFor(performance)).getVolumeCredits();
     }
 
     //refactor: play 변수 제거 (질의 함수로 변경)
@@ -57,6 +57,6 @@ public class StatementData {
 
     //refactor: switch 함수 추출
     public int amountFor(Performance performance) throws Exception {
-        return new PerformanceCalCulator(performance, playFor(performance)).getAmount();
+        return new PerformanceCalculator(performance, playFor(performance)).getAmount();
     }
 }
