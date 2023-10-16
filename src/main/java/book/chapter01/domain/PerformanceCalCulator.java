@@ -34,4 +34,15 @@ public class PerformanceCalCulator {
         }
         return result;
     }
+
+    public int getVolumeCredits() {
+        int result = 0;
+        result += Math.max(performance.getAudience() - 30, 0);
+
+        // 희극 관객 5명마다 추가 포인트 제공
+        if (play.getType().equals("comedy")) {
+            result += Math.floor(performance.getAudience() / 5);
+        }
+        return result;
+    }
 }

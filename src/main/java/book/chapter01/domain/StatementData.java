@@ -43,15 +43,8 @@ public class StatementData {
     }
 
     //refactor: 포인트 적립 계산 메서드 추출
-    private int volumeCreditsFor(Performance aPerformance) {
-        int result = 0;
-        result += Math.max(aPerformance.getAudience() - 30, 0);
-
-        // 희극 관객 5명마다 추가 포인트 제공
-        if (playFor(aPerformance).getType().equals("comedy")) {
-            result += Math.floor(aPerformance.getAudience() / 5);
-        }
-        return result;
+    private int volumeCreditsFor(Performance performance) {
+        return new PerformanceCalCulator(performance, playFor(performance)).getVolumeCredits();
     }
 
     //refactor: play 변수 제거 (질의 함수로 변경)
