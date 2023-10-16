@@ -16,13 +16,13 @@ public class PerformanceCalCulator {
         int result = 0;
 
         switch (play.getType()) {
-            case "tragedy":
+            case TRAGEDY:
                 result = 40000;
                 if (performance.getAudience() > 30) {
                     result += 1000 * (performance.getAudience() - 30);
                 }
                 break;
-            case "comedy":
+            case COMEDY:
                 result = 30000;
                 if (performance.getAudience() > 20) {
                     result += 10000 + 500 * (performance.getAudience() - 20);
@@ -40,7 +40,7 @@ public class PerformanceCalCulator {
         result += Math.max(performance.getAudience() - 30, 0);
 
         // 희극 관객 5명마다 추가 포인트 제공
-        if (play.getType().equals("comedy")) {
+        if (play.getType() == PlayType.COMEDY) {
             result += Math.floor(performance.getAudience() / 5);
         }
         return result;
