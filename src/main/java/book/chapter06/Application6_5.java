@@ -26,8 +26,7 @@ public class Application6_5 {
     }
 
     public static boolean isNewEngland(Customer customer) {
-        String stateCode = customer.getAddress().getState();
-        return refactoredIsNewEngland(stateCode);
+        return refactoredIsNewEngland(customer.getAddress().getState());
     }
 
     private static boolean refactoredIsNewEngland(String stateCode) {
