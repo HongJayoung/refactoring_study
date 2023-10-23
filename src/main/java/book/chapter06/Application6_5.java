@@ -26,8 +26,13 @@ public class Application6_5 {
     }
 
     public static boolean isNewEngland(Customer customer) {
-        return Arrays.stream(new String[] {"MA", "CT", "ME", "VT", "NH", "RI"})
-                .anyMatch(code -> code.equals(customer.getAddress().getState()));
+        String stateCode = customer.getAddress().getState();
+        return refactoredIsNewEngland(stateCode);
+    }
+
+    private static boolean refactoredIsNewEngland(String stateCode) {
+        return Arrays.stream(new String[]{"MA", "CT", "ME", "VT", "NH", "RI"})
+                .anyMatch(code -> code.equals(stateCode));
     }
 }
 
