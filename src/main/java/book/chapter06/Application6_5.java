@@ -33,8 +33,7 @@ public class Application6_5 {
     }
 
     private static boolean refactoredIsNewEngland(String stateCode) {
-        return Arrays.stream(new String[]{"MA", "CT", "ME", "VT", "NH", "RI"})
-                .anyMatch(code -> code.equals(stateCode));
+        return Arrays.asList(new String[]{"MA", "CT", "ME", "VT", "NH", "RI"}).contains(stateCode);
     }
 }
 
