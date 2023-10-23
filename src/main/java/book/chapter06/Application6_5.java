@@ -23,16 +23,12 @@ public class Application6_5 {
 
         long numberOfNewEngland =
                 someCustomers.stream()
-                        .filter(customer -> refactoredIsNewEngland(customer.getAddress().getState()))
+                        .filter(customer -> isNewEngland(customer.getAddress().getState()))
                         .count();
         System.out.println("numberOfNewEngland = " + numberOfNewEngland);
     }
 
-    public static boolean isNewEngland(Customer customer) {
-        return refactoredIsNewEngland(customer.getAddress().getState());
-    }
-
-    private static boolean refactoredIsNewEngland(String stateCode) {
+    private static boolean isNewEngland(String stateCode) {
         return Arrays.asList(new String[]{"MA", "CT", "ME", "VT", "NH", "RI"}).contains(stateCode);
     }
 }
