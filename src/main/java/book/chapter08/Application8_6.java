@@ -11,11 +11,10 @@ public class Application8_6 {
 
         if(availableResources.size() == 0) {
             result = "create result";
-            allocatedResources.add(result);
         } else {
             result = availableResources.remove();
-            allocatedResources.add(result);
         }
+        allocatedResources.add(result);
     }
 
     /* 예시1
