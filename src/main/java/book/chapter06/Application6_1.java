@@ -28,9 +28,7 @@ class FinancialObligation {
     public void printOwing(Invoice invoice) {
         int outstanding = 0;
 
-        System.out.println("*****************");
-        System.out.println("**** 고객 채무 ****");
-        System.out.println("*****************");
+        printBanner();
 
         // 미해결 채무 (outstanding) 을 계산한다.
         for (Order o : invoice.getOrders()) {
@@ -46,6 +44,12 @@ class FinancialObligation {
         System.out.println(String.format("채무액: %d", outstanding));
         System.out.println(String.format("마감일: %s", invoice.dueDate));
 
+    }
+
+    private static void printBanner() {
+        System.out.println("*****************");
+        System.out.println("**** 고객 채무 ****");
+        System.out.println("*****************");
     }
 }
 
