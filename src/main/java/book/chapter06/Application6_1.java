@@ -35,12 +35,15 @@ class FinancialObligation {
             outstanding += o.amount;
         }
 
+        recordDueDate(invoice);
+        printDetails(invoice, outstanding);
+
+    }
+
+    private static void recordDueDate(Invoice invoice) {
         // 마감일(dueDate) 을 기록한다.
         LocalDateTime today = Clock.today();
         invoice.dueDate = today.plusDays(30);
-
-        printDetails(invoice, outstanding);
-
     }
 
     private static void printDetails(Invoice invoice, int outstanding) {
