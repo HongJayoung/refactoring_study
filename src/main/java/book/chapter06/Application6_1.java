@@ -39,11 +39,15 @@ class FinancialObligation {
         LocalDateTime today = Clock.today();
         invoice.dueDate = today.plusDays(30);
 
+        printDetails(invoice, outstanding);
+
+    }
+
+    private static void printDetails(Invoice invoice, int outstanding) {
         // 세부 사항을 출력한다.
         System.out.println(String.format("고객명: %s", invoice.customer));
         System.out.println(String.format("채무액: %d", outstanding));
         System.out.println(String.format("마감일: %s", invoice.dueDate));
-
     }
 
     private static void printBanner() {
