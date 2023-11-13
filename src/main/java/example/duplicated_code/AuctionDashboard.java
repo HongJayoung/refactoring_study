@@ -26,9 +26,9 @@ public class AuctionDashboard {
 
     private static List<String> getItems(Auction auction) {
         // Get ongoing auction items.
-        List<String> inProgressItems = new ArrayList<>();
-        auction.getItems().forEach(item -> inProgressItems.add(item.getName()));
-        return inProgressItems;
+        List<String> items = new ArrayList<>();
+        auction.getItems().forEach(item -> items.add(item.getName()));
+        return items;
     }
 
     private static Auction getAuction(String region) {
