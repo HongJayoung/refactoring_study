@@ -8,30 +8,21 @@ import java.util.List;
 
 public class AuctionDashboard {
     private void printOngoingItems() {
-        print(getItems(getAuction("Seoul")));
-    }
+        AuctionHub auctionHub = AuctionHub.connect("Seoul");
+        Auction auction = auctionHub.getAuction();
+        List<String> ongoingItems = new ArrayList<>();
 
-    private void printInProgressItems(String region) {
-        print(getItems(getAuction(region)));
-    }
-
-    private static void print(List<String> ongoingItems) {
-        // Print ongoing items
+        auction.getItems().forEach(item -> ongoingItems.add(item.getName()));
         ongoingItems.forEach(System.out::println);
     }
 
-    private static List<String> getItems(Auction auction) {
-        // Get ongoing auction items.
-        List<String> items = new ArrayList<>();
-        auction.getItems().forEach(item -> items.add(item.getName()));
-        return items;
-    }
-
-    private static Auction getAuction(String region) {
-        // Get auction data through auction hubs in specific regions.
+    private void printInProgressItems(String region) {
+        List<String> inProgressItems = new ArrayList<>();
         AuctionHub auctionHub = AuctionHub.connect(region);
         Auction auction = auctionHub.getAuction();
-        return auction;
+
+        auction.getItems().forEach(item -> inProgressItems.add(item.getName()));
+        inProgressItems.forEach(System.out::println);
     }
 
     public static void main(String[] args) {
