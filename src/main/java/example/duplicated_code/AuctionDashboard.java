@@ -8,29 +8,34 @@ import java.util.List;
 
 public class AuctionDashboard {
     private void printOngoingItems() {
-        // Get auction data through auction hubs in specific regions.
-        AuctionHub auctionHub = AuctionHub.connect("Seoul");
-        Auction auction = auctionHub.getAuction();
+        Auction auction = getAuction("Seoul");
+        List<String> ongoingItems = getItems(auction);
+        print(ongoingItems);
+    }
 
-        // Get ongoing auction items.
-        List<String> ongoingItems = new ArrayList<>();
-        auction.getItems().forEach(item -> ongoingItems.add(item.getName()));
+    private void printInProgressItems(String region) {
+        Auction auction = getAuction(region);
+        List<String> inProgressItems = getItems(auction);
+        print(inProgressItems);
+    }
 
+    private static void print(List<String> ongoingItems) {
         // Print ongoing items
         ongoingItems.forEach(System.out::println);
     }
 
-    private void printInProgressItems(String region) {
-        // Get auction data through auction hubs in specific regions.
-        AuctionHub auctionHub = AuctionHub.connect(region);
-        Auction auction = auctionHub.getAuction();
-
+    private static List<String> getItems(Auction auction) {
         // Get ongoing auction items.
         List<String> inProgressItems = new ArrayList<>();
         auction.getItems().forEach(item -> inProgressItems.add(item.getName()));
+        return inProgressItems;
+    }
 
-        // Print ongoing items
-        inProgressItems.forEach(System.out::println);
+    private static Auction getAuction(String region) {
+        // Get auction data through auction hubs in specific regions.
+        AuctionHub auctionHub = AuctionHub.connect(region);
+        Auction auction = auctionHub.getAuction();
+        return auction;
     }
 
     public static void main(String[] args) {
