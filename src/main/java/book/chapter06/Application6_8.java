@@ -60,3 +60,10 @@ class OperationPlan {
     private int temperatureFloor;
     private int temperatureCeiling;
 }
+
+@Getter
+@AllArgsConstructor
+class NumberRange {
+    private int min;
+    private int max;
+}
