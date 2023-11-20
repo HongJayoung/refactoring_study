@@ -16,7 +16,7 @@ public class Application6_8 {
 
         List<Reading> alerts =
                 readingsOutsideRange(
-                        station, operationPlan.getTemperatureFloor(), operationPlan.getTemperatureCeiling());
+                        station, operationPlan.getTemperatureFloor(), operationPlan.getTemperatureCeiling(), null);
         System.out.println("alerts => " + alerts);
     }
 
@@ -33,7 +33,7 @@ public class Application6_8 {
         return new Station(name, readings);
     }
 
-    public static List<Reading> readingsOutsideRange(Station station, int min, int max) {
+    public static List<Reading> readingsOutsideRange(Station station, int min, int max, NumberRange range) {
         return station.getReadings().stream()
                 .filter(r -> r.getTemp() < min || r.getTemp() > max)
                 .collect(Collectors.toList());
