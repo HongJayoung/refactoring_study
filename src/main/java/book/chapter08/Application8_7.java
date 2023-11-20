@@ -19,21 +19,11 @@ public class Application8_7 {
     }
 
     private static int getYoungest(List<Person> persons) {
-        int youngest = persons.isEmpty() ? Integer.MAX_VALUE : persons.get(0).getAge();
-        for (Person person : persons) {
-            if (person.getAge() < youngest) {
-                youngest = person.getAge();
-            }
-        }
-        return youngest;
+        return persons.stream().mapToInt(Person::getAge).min().orElse(Integer.MAX_VALUE);
     }
 
     private static int getTotalSalary(List<Person> persons) {
-        int totalSalary = 0;
-        for (Person person : persons) {
-            totalSalary += person.getSalary();
-        }
-        return totalSalary;
+        return persons.stream().mapToInt(Person::getSalary).sum();
     }
 
     private static List<Person> getPersonList() {
