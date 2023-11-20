@@ -16,13 +16,25 @@ public class Application10_1 {
         int totalAmount = request.getAmount() * request.getQuantity();
 
         double charge;
-        if (!paymentDate.isBefore(plan.getSummerStart()) && !paymentDate.isAfter(plan.getSummerEnd())) {
-            charge = totalAmount * plan.getSummerRate();
+        if (summer(paymentDate)) {
+            charge = summerCharge(totalAmount);
         } else {
-            charge = totalAmount * plan.getRegularRate() + plan.getRegularServiceCharge();
+            charge = regularCharge(totalAmount);
         }
 
         System.out.println("charge = " + charge);
+    }
+
+    private static double regularCharge(int totalAmount) {
+        return totalAmount * plan.getRegularRate() + plan.getRegularServiceCharge();
+    }
+
+    private static double summerCharge(int totalAmount) {
+        return totalAmount * plan.getSummerRate();
+    }
+
+    private static boolean summer(LocalDate paymentDate) {
+        return !paymentDate.isBefore(plan.getSummerStart()) && !paymentDate.isAfter(plan.getSummerEnd());
     }
 }
 
