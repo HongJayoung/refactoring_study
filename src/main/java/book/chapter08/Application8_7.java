@@ -16,6 +16,9 @@ public class Application8_7 {
             if (person.getAge() < youngest) {
                 youngest = person.getAge();
             }
+        }
+
+        for (Person person : persons) {
             totalSalary += person.getSalary();
         }
 
