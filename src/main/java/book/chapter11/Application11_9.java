@@ -10,15 +10,20 @@ public class Application11_9 {
         System.out.println("result = " + result);
     }
 
-    public static int score(
-            Candidate candidate, MedicalExam medicalExam, ScoringGuide scoringGuide) {
-        return new Scorer().execute(candidate, medicalExam, scoringGuide);
+    public static int score(Candidate candidate, MedicalExam medicalExam, ScoringGuide scoringGuide) {
+        return new Scorer(candidate).execute(medicalExam, scoringGuide);
     }
 }
 
 class Scorer {
-    public int execute(
-            Candidate candidate, MedicalExam medicalExam, ScoringGuide scoringGuide) {
+    private Candidate candidate;
+
+    public Scorer(Candidate candidate) {
+        this.candidate = candidate;
+    }
+
+    public int execute(MedicalExam medicalExam, ScoringGuide scoringGuide) {
+
         int result = 0;
         int healthLevel = 0;
         boolean highMedicalRiskFlag = false;
