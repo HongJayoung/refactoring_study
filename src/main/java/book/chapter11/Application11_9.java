@@ -31,19 +31,26 @@ class Scorer {
     }
 
     public int execute() {
-        if (medicalExam.isSmoker) {
-            healthLevel += 10;
-            highMedicalRiskFlag = true;
-        }
-
-        if (scoringGuide.stateWithLowCertification(candidate.originalState)) {
-            certificationGrade = "low";
-            result -= 5;
-        }
+        scoreSmoking();
+        scoreSomething();
 
         // 비슷한 코드가 한 참 이어짐
         result -= Math.max(healthLevel - 5, 0);
         return result;
+    }
+
+    private void scoreSomething() {
+        if (scoringGuide.stateWithLowCertification(candidate.originalState)) {
+            certificationGrade = "low";
+            result -= 5;
+        }
+    }
+
+    private void scoreSmoking() {
+        if (medicalExam.isSmoker) {
+            healthLevel += 10;
+            highMedicalRiskFlag = true;
+        }
     }
 }
 
